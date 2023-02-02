@@ -47,6 +47,7 @@ const StyledImg = styled("img")`
   height: 40px;
   width: 40px;
   margin-right: 14px;
+  cursor: pointer;
 `;
 const Styled_P = styled("h1")`
   font-family: "Proxima Nova";
