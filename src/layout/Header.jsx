@@ -31,7 +31,6 @@ export default Header;
 
 const StyledHeader = styled(Container)`
   height: 80px;
-  width: 1328px;
   border-bottom: 1px solid grey;
   display: flex;
   justify-content: space-between;
