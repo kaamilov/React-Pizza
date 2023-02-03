@@ -1,17 +1,30 @@
 import { styled } from "@mui/material";
-import React from "react";
+import { useState } from "react";
+import Sort from "./Sort";
+const qotegory = [
+  "Все",
+  "Мясные",
+  "Вегетарианская",
+  "Гриль",
+  "Острые",
+  "Закрытые",
+];
 const Cotegory = () => {
+  const [active, setActive] = useState(0);
   return (
     <Styled_Container>
       <Styled_UL>
-        <li>Все</li>
-        <li>Мясные</li>
-        <li>Вегетарианская</li>
-        <li>Гриль</li>
-        <li>Острые</li>
-        <li>Закрытые</li>
+        {qotegory.map((item, id) => (
+          <li
+            key={id}
+            onClick={() => setActive(id)}
+            className={active === id ? "active" : ""}
+          >
+            {item}
+          </li>
+        ))}
       </Styled_UL>
-      Сартировка по
+      <Sort />
     </Styled_Container>
   );
 };
@@ -19,7 +32,7 @@ const Cotegory = () => {
 export default Cotegory;
 
 const Styled_Container = styled("section")`
-  margin-top: 40px;
+  margin: 81px 0 32px 0;
   height: 46px;
   display: flex;
   justify-content: space-between;
@@ -31,10 +44,6 @@ const Styled_UL = styled("ul")`
   justify-content: flex-start;
   align-items: center;
   list-style: none;
-  margin: -20px;
-  & .active {
-    background: red;
-  }
 
   & li {
     background: #f9f9f9;
@@ -48,15 +57,16 @@ const Styled_UL = styled("ul")`
     padding: 16px;
     text-decoration: none;
     color: black;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
   }
   & li:hover {
     background: black;
     color: #fff;
   }
   & .active {
-    background: red;
-  }
-  & .link {
-    color: red;
+    background: black;
+    color: #fff;
   }
 `;
