@@ -1,29 +1,36 @@
 import { styled } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-const options = ["популярности", "по цене", "по алфавиту"];
-const Sort = () => {
-  const [active, setActive] = useState(0);
+const options = [
+  { name: "популярности(DESC)", sort: "rating" },
+  { name: "популярности(ABC)", sort: "-rating" },
+  { name: "по цене(DESC)", sort: "price" },
+  { name: "по цене(ABC)", sort: "-price" },
+  { name: "по алфавиту(DESC)", sort: "title" },
+  { name: "по алфавиту(ABC)", sort: "-title" },
+];
+const Sort = ({ value, onChange }) => {
   const [open, setOpen] = useState(false);
   const onClickSeleckted = (id) => {
-    setActive(id);
+    onChange(id);
     setOpen(false);
   };
   return (
     <Sort_Cotainer>
-      Сортировка по:
+      <span>Сортировка по:</span>
+
       <Styled_Selected onClick={() => setOpen(!open)}>
-        {options[active]}
+        {value.name}
       </Styled_Selected>
       {open && (
         <Sort_Select>
           {options.map((el, i) => (
             <li
               key={i}
-              onClick={() => onClickSeleckted(i)}
-              className={active === i ? "active" : ""}
+              onClick={() => onClickSeleckted(el)}
+              className={value.sort === el.sort ? "active" : ""}
             >
-              {el}
+              {el.name}
             </li>
           ))}
         </Sort_Select>
@@ -40,26 +47,34 @@ const Sort_Cotainer = styled("div")(() => ({
   fontWeight: "700",
   fontSize: "16px",
   position: "relative",
-  width: "220px",
+  width: "280px",
   display: "flex",
   justifyContent: "space-between",
+  "& span": {
+    width: "200px",
+  },
 }));
 
 const Sort_Select = styled("ul")(() => ({
-  fontFamily: "Proxima Nova",
-  fontStyle: "normal",
+  width: "180px",
   fontWeight: "400",
   fontSize: "16px",
   color: "#FE5F1E",
   position: "absolute",
   right: "0",
+  top: "25px",
   textAlign: "end",
+  background: "#fff",
+  padding: "10px",
+
   "& li": {
     border: "none",
     color: "black",
     listStyle: "none",
     height: "38px",
     cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
   },
   "& .active": {
     color: "#FE5F1E",

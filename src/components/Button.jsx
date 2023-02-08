@@ -9,7 +9,7 @@ const Button = ({
   width,
   height,
   icon,
-  endIcon
+  endIcon,
 }) => {
   return (
     <StyledButton
@@ -51,9 +51,9 @@ const StyledButton = styled(MuiButton)`
     color: ${(props) => props.color || "#ffffff"};
   }
   &.Mui-disabled {
-    background: grey;
-    border: 1px solid "grey";
+    background: none;
+    border: 1px solid grey;
     cursor: "not-drop";
-    border: none;
+    color: grey;
   }
 `;

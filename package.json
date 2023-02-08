@@ -16,8 +16,11 @@
     "@testing-library/user-event": "^13.5.0",
     "2gis-maps": "^3.7.3",
     "2gis-maps-react": "^0.0.4",
+    "axios": "^1.3.2",
     "firebase": "^9.15.0",
+    "ky": "^0.33.2",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-input-mask": "^2.0.4",
@@ -28,9 +31,6 @@
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
-    "slick-carousel": "^1.8.1",
-    "styled-component": "^2.8.0",
-    "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -56,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
