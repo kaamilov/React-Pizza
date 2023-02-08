@@ -9,22 +9,20 @@ const qotegory = [
   "Острые",
   "Закрытые",
 ];
-const Cotegory = () => {
-  const [active, setActive] = useState(0);
+const Cotegory = ({ value, onChange }) => {
   return (
     <Styled_Container>
       <Styled_UL>
         {qotegory.map((item, id) => (
           <li
             key={id}
-            onClick={() => setActive(id)}
-            className={active === id ? "active" : ""}
+            onClick={() => onChange(id)}
+            className={value === id ? "active" : ""}
           >
             {item}
           </li>
         ))}
       </Styled_UL>
-      <Sort />
     </Styled_Container>
   );
 };
@@ -32,11 +30,20 @@ const Cotegory = () => {
 export default Cotegory;
 
 const Styled_Container = styled("section")`
-  margin: 81px 0 32px 0;
-  height: 46px;
+  height: 120px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 885px) {
+    display: block;
+    justify-content: center;
+    & span {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+  }
 `;
 
 const Styled_UL = styled("ul")`
@@ -60,6 +67,9 @@ const Styled_UL = styled("ul")`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
+    @media screen and (max-width: 885px) {
+      margin: 25px;
+    }
   }
   & li:hover {
     background: black;
@@ -68,5 +78,9 @@ const Styled_UL = styled("ul")`
   & .active {
     background: black;
     color: #fff;
+  }
+  @media screen and (max-width: 980px) {
+    max-width: 800px;
+    overflow-x: scroll;
   }
 `;
