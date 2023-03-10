@@ -2,16 +2,37 @@ import { styled, Card as MuiCard } from "@mui/material";
 import { IoIosAdd } from "react-icons/io";
 import React, { useState } from "react";
 import Button from "./Button";
-
-const Card = ({ title, price, imageUrl, sizes, types }) => {
+import { addItems } from "../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+const Card = ({ id, title, price, imageUrl, sizes, types }) => {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === id)
+  );
+  const count = cartItem ? cartItem.count : 0;
   const [activeType, setActiveType] = useState(0);
   const [activeSisez, setActiveSisez] = useState(0);
   const typeName = ["Танкое", "традиционное"];
+  const onClickAddItem = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: activeType,
+      size: activeSisez,
+    };
+    dispatch(addItems(item));
+  };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center"  }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <Styled_Card>
-        <Card_Media src={imageUrl} />
+        <Link to={`/pizza/${id}`}>
+          <Card_Media src={imageUrl} />
+        </Link>
+
         <Styled_h1>{title}</Styled_h1>
         <Styled_Block>
           <Styled_BlockCard>
@@ -44,6 +65,8 @@ const Card = ({ title, price, imageUrl, sizes, types }) => {
             width="150px"
             height="40px"
             icon={<IoIosAdd />}
+            onClick={onClickAddItem}
+            endIcon={count > 0 && count}
           >
             Добавить
           </Button>
