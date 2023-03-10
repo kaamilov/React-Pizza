@@ -1,7 +1,12 @@
 import { styled } from "@mui/material";
-import React from "react";
+import React, { useRef } from "react";
 
 const Search = ({ value, setValue }) => {
+  const inputRef = useRef();
+  const onClickClear = () => {
+    setValue("");
+    inputRef.current.focus();
+  };
   return (
     <Container>
       <svg
@@ -15,6 +20,7 @@ const Search = ({ value, setValue }) => {
         </g>
       </svg>
       <Styled_Input
+        ref={inputRef}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         type="text"
@@ -22,7 +28,7 @@ const Search = ({ value, setValue }) => {
       />
       {value && (
         <svg
-          onClick={() => setValue("")}
+          onClick={onClickClear}
           className="clear"
           height="20"
           viewBox="0 0 48 48"

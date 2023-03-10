@@ -1,11 +1,14 @@
 import { Box, Container, styled } from "@mui/material";
 import { BsCart } from "react-icons/bs";
 import { TbCurrencyRubel } from "react-icons/tb";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import Button from "../components/Button";
 import Search from "../components/Search";
-const Header = ({value, setValue}) => {
+const Header = ({ value, setValue }) => {
+  const { items, totalPrice } = useSelector((state) => state.cart);
+  const totalCount = items.reduce((sum, items) => sum + items.count, 0);
   return (
     <header>
       <StyledHeader>
@@ -17,10 +20,11 @@ const Header = ({value, setValue}) => {
             <Styled_P>самая вкусная пицца во вселенной</Styled_P>
           </div>
         </Link>
-        <Search value={value} setValue={setValue}/>
+        <Search value={value} setValue={setValue} />
         <Link style={{ textDecoration: "none" }} to="cart">
-          <Button className="btn" variant="contained" endIcon={<BsCart />}>
-            520 <TbCurrencyRubel /> |
+          <Button className="btn" variant="contained">
+            {totalPrice} <TbCurrencyRubel /> |<BsCart className="btnIcon" />
+            {totalCount}
           </Button>
         </Link>
       </StyledHeader>
@@ -54,6 +58,10 @@ const StyledHeader = styled("div")`
   & .btn {
     width: 150px;
     height: 50px;
+  }
+  & .btnIcon {
+    width: 50px;
+    height: 25px;
   }
 `;
 const Styled_H1 = styled("h1")`

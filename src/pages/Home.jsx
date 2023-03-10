@@ -2,53 +2,55 @@ import { useEffect, useState } from "react";
 import { styled, Pagination } from "@mui/material";
 import Cotegory from "../components/Cotegory";
 import Card from "../components/Card";
-import ky from "ky";
 import Skeleton from "../components/Skeleton";
 import Sort from "../components/Sort";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import { fetchPizza, selectorPizza } from "../redux/slices/pizzaSlice";
 
 const Home = ({ value, setValue }) => {
-  const [pizza, setPizza] = useState([]);
-  const [skeleton, setSkeleton] = useState(true);
-  const [qategoryId, setQategory] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSort] = useState({
-    name: "популярности",
-    sort: "rating",
-  });
+  const { сategoryId, sort, currentPage } = useSelector(
+    (store) => store.filter
+  );
+  const { itemss, status, error } = useSelector(selectorPizza);
+  console.log(status);
+  const sortType = sort.sort;
+  const dispatch = useDispatch();
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id));
+  };
+  const getAllProducts = async () => {
+    const sortBy = sortType.replace("-", "");
+    const order = sortType.includes("-") ? "abc" : "desc";
+    const сategery = сategoryId > 0 ? `category=${сategoryId}` : "";
+    const search = value ? `&search=${value}` : "";
+    dispatch(fetchPizza({ sortBy, order, сategery, search, currentPage }));
+  };
   useEffect(() => {
-    const getProduct = async () => {
-      setSkeleton(true);
-      const sortBy = sortType.sort.replace("-", "");
-      const order = sortType.sort.includes("-") ? "abc" : "desc";
-      const qategery = qategoryId > 0 ? `category=${qategoryId}` : "";
-      const search = value ? `&search=${value}` : "";
-      const data = await ky
-        .get(
-          `https://63dca73bc45e08a0435d8ab3.mockapi.io/items?page=${currentPage}&limit=4&${qategery}&sortBy=${sortBy}&order=${order}${search}`
-        )
-        .json();
-      setPizza(data);
-      setSkeleton(false);
-    };
-    getProduct();
-    window.scrollTo(0, 0);
-  }, [qategoryId, sortType, value, currentPage]);
-  const pizzas = pizza.map((item) => <Card key={item.id} {...item} />);
+    getAllProducts();
+  }, [сategoryId, value, currentPage, sortType]);
+  const pizzas = itemss?.map((item) => <Card key={item.id} {...item} />);
   const skeletons = [...new Array(4)].map((_, i) => <Skeleton key={i} />);
   const onChangeHandler = (e, p) => {
-    setCurrentPage(p);
+    dispatch(setCurrentPage(p));
   };
   return (
     <Styled_Home>
-      <span>
-        <Cotegory value={qategoryId} onChange={(id) => setQategory(id)} />
-        <Sort value={sortType} onChange={(id) => setSort(id)} />
-      </span>
-      <h1 className="h1">Все Пиццы</h1>
-      <main>{skeleton ? skeletons : pizzas}</main>
-      <p>
-        <Pagination count={3} color="warning" onChange={onChangeHandler} />
-      </p>
+      {error ? (
+        <h1 style={{ color: "red" }}>Error {error}</h1>
+      ) : (
+        <>
+          <span>
+            <Cotegory value={сategoryId} onChange={onChangeCategory} />
+            <Sort />
+          </span>
+          <h1 className="h1">Все Пиццы</h1>
+          <main>{status === "loading" ? skeletons : pizzas}</main>
+        </>
+      )}
+
+      <Pagination count={3} color="warning" onChange={onChangeHandler} />
     </Styled_Home>
   );
 };

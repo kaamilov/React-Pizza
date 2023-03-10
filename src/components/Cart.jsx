@@ -1,14 +1,23 @@
 import { styled } from "@mui/material";
-import {
-  MdDeleteOutline,
-  MdOutlineShoppingCart,
-  MdRemoveCircleOutline,
-} from "react-icons/md";
-import { CiCircleRemove } from "react-icons/ci";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import Button from "../components/Button";
+import { MdDeleteOutline, MdOutlineShoppingCart } from "react-icons/md";
+import Button from "./Button";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import CartItem from "./CartItem";
+import { clearItems, selectorCart } from "../redux/slices/cartSlice";
+import CartEmpty from "./CartEmpty";
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { items, totalPrice } = useSelector(selectorCart);
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const onClickClear = () => {
+    if (window.confirm("Очистить корзину?")) {
+      dispatch(clearItems());
+    }
+  };
+  if (!totalPrice) {
+    return <CartEmpty />;
+  }
   return (
     <Styled_Cart_Container>
       <div className="container">
@@ -16,80 +25,21 @@ const Cart = () => {
           <div className="cart">
             <MdOutlineShoppingCart className="shop" /> <h6>Корзина</h6>
           </div>
-          <div className="cart-clear">
+          <div className="cart-clear" onClick={onClickClear}>
             <MdDeleteOutline />
             <span>Очистить корзину</span>
           </div>
         </Styled_Block1>
-        <Styled_Block2>
-          <div className="title">
-            <img
-              src="https://w7.pngwing.com/pngs/56/985/png-transparent-pizza-margherita-sushi-pizza-pizza-delivery-pizza-thumbnail.png"
-              alt=""
-            />
-            <div>
-              <h4>Сырный цыпленок</h4>
-              <span>тонкое тесто, 26 см.</span>
-            </div>
-          </div>
+        {items.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
 
-          <div className="counter-block">
-            <MdRemoveCircleOutline className="counter" />
-            <h5> 33</h5>
-
-            <IoIosAddCircleOutline className="counter" />
-          </div>
-          <h5>330p</h5>
-          <CiCircleRemove className="remove" />
-        </Styled_Block2>
-        <Styled_Block2>
-          <div className="title">
-            <img
-              src="https://w7.pngwing.com/pngs/56/985/png-transparent-pizza-margherita-sushi-pizza-pizza-delivery-pizza-thumbnail.png"
-              alt=""
-            />
-            <div>
-              <h4>Сырный цыпленок</h4>
-              <span>тонкое тесто, 26 см.</span>
-            </div>
-          </div>
-
-          <div className="counter-block">
-            <MdRemoveCircleOutline className="counter" />
-            <h5> 33</h5>
-
-            <IoIosAddCircleOutline className="counter" />
-          </div>
-          <h5>330p</h5>
-          <CiCircleRemove className="remove" />
-        </Styled_Block2>
-        <Styled_Block2>
-          <div className="title">
-            <img
-              src="https://w7.pngwing.com/pngs/56/985/png-transparent-pizza-margherita-sushi-pizza-pizza-delivery-pizza-thumbnail.png"
-              alt=""
-            />
-            <div>
-              <h4>Сырный цыпленок</h4>
-              <span>тонкое тесто, 26 см.</span>
-            </div>
-          </div>
-
-          <div className="counter-block">
-            <MdRemoveCircleOutline className="counter" />
-            <h5> 33</h5>
-
-            <IoIosAddCircleOutline className="counter" />
-          </div>
-          <h5>330p</h5>
-          <CiCircleRemove className="remove" />
-        </Styled_Block2>
         <Styled_Block2>
           <p>
-            Всего пицц: <h5>3шт</h5>
+            Всего пицц: <h5>{totalCount} шт</h5>
           </p>
           <p>
-            Сумма заказов <h5>500p </h5>
+            Сумма заказов <h5>{totalPrice} p</h5>
           </p>
         </Styled_Block2>
         <div className="block1">
@@ -111,7 +61,7 @@ const Cart = () => {
 export default Cart;
 
 const Styled_Cart_Container = styled("section")(() => ({
-  width: "821px",
+  width: "921px",
   height: "100%",
   margin: "0 auto",
   display: "grid",
