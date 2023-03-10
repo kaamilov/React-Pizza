@@ -1,7 +1,5 @@
 import { styled } from "@mui/material";
-import { useState } from "react";
-import Sort from "./Sort";
-const qotegory = [
+const cotegory = [
   "Все",
   "Мясные",
   "Вегетарианская",
@@ -13,7 +11,7 @@ const Cotegory = ({ value, onChange }) => {
   return (
     <Styled_Container>
       <Styled_UL>
-        {qotegory.map((item, id) => (
+        {cotegory.map((item, id) => (
           <li
             key={id}
             onClick={() => onChange(id)}
