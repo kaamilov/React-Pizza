@@ -1,6 +1,8 @@
 import { styled } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort, selectorFilter } from "../redux/slices/filterSlice";
 const options = [
   { name: "популярности(DESC)", sort: "rating" },
   { name: "популярности(ABC)", sort: "-rating" },
@@ -9,10 +11,12 @@ const options = [
   { name: "по алфавиту(DESC)", sort: "title" },
   { name: "по алфавиту(ABC)", sort: "-title" },
 ];
-const Sort = ({ value, onChange }) => {
+const Sort = () => {
+  const dispatch = useDispatch();
+  const { sort } = useSelector(selectorFilter);
   const [open, setOpen] = useState(false);
   const onClickSeleckted = (id) => {
-    onChange(id);
+    dispatch(setSort(id));
     setOpen(false);
   };
   return (
@@ -20,7 +24,7 @@ const Sort = ({ value, onChange }) => {
       <span>Сортировка по:</span>
 
       <Styled_Selected onClick={() => setOpen(!open)}>
-        {value.name}
+        {sort.name}
       </Styled_Selected>
       {open && (
         <Sort_Select>
@@ -28,7 +32,7 @@ const Sort = ({ value, onChange }) => {
             <li
               key={i}
               onClick={() => onClickSeleckted(el)}
-              className={value.sort === el.sort ? "active" : ""}
+              className={sort.sortProperty === el.sort ? "active" : ""}
             >
               {el.name}
             </li>
