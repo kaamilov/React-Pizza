@@ -1,5 +1,6 @@
+import React from "react";
 import { styled } from "@mui/material";
-const NotFound = () => {
+const NotFound: React.FC = () => {
   return (
     <Container_NotFount>
       <span>😕</span>

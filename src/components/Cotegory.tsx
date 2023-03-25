@@ -1,13 +1,19 @@
 import { styled } from "@mui/material";
-const cotegory = [
-  "Все",
-  "Мясные",
-  "Вегетарианская",
-  "Гриль",
-  "Острые",
-  "Закрытые",
-];
-const Cotegory = ({ value, onChange }) => {
+import React from "react";
+
+type CotegoryProps = {
+  value: number;
+  onChange: any;
+};
+const Cotegory: React.FC<CotegoryProps> = ({ value, onChange }) => {
+  const cotegory = [
+    "Все",
+    "Мясные",
+    "Вегетарианская",
+    "Гриль",
+    "Острые",
+    "Закрытые",
+  ];
   return (
     <Styled_Container>
       <Styled_UL>

@@ -1,14 +1,18 @@
 import { Box, Container, styled } from "@mui/material";
+import React from "react";
 import { BsCart } from "react-icons/bs";
 import { TbCurrencyRubel } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import Button from "../components/Button";
-import Search from "../components/Search";
-const Header = ({ value, setValue }) => {
-  const { items, totalPrice } = useSelector((state) => state.cart);
-  const totalCount = items.reduce((sum, items) => sum + items.count, 0);
+import { selectorCart } from "../redux/slices/cartSlice";
+const Header = () => {
+  const { items, totalPrice } = useSelector(selectorCart);
+  const totalCount = items.reduce(
+    (sum: number, items: any) => sum + items.count,
+    0
+  );
   return (
     <header>
       <StyledHeader>
@@ -20,12 +24,11 @@ const Header = ({ value, setValue }) => {
             <Styled_P>самая вкусная пицца во вселенной</Styled_P>
           </div>
         </Link>
-        <Search value={value} setValue={setValue} />
         <Link style={{ textDecoration: "none" }} to="cart">
-          <Button className="btn" variant="contained">
+          {/* <Button className="btn" variant="contained">
             {totalPrice} <TbCurrencyRubel /> |<BsCart className="btnIcon" />
             {totalCount}
-          </Button>
+          </Button> */}
         </Link>
       </StyledHeader>
     </header>

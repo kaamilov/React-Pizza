@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
 import { fetchPizza, selectorPizza } from "../redux/slices/pizzaSlice";
 
-const Home = ({ value, setValue }) => {
+const Home = ({ value }) => {
+  console.log(value);
   const { сategoryId, sort, currentPage } = useSelector(
     (store) => store.filter
   );

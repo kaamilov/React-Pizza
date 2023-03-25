@@ -1,24 +1,24 @@
 import React from "react";
 import { styled, Button as MuiButton } from "@mui/material";
-const Button = ({
+type ButtonProps = {
+  children: string | number;
+  onClick: any;
+  variant: string | number;
+  bgcolor: string;
+  icon: any;
+  endIcon: any;
+};
+const Button: React.FC<ButtonProps> = ({
   children,
-  disabled,
   onClick,
   variant,
-  bgcolor,
-  width,
-  height,
   icon,
   endIcon,
 }) => {
   return (
     <StyledButton
-      width={width}
-      height={height}
-      bgcolor={bgcolor}
       onClick={onClick}
-      disabled={disabled}
-      variant={variant}
+      // variant={variant}
       startIcon={icon}
       endIcon={endIcon}
     >
@@ -31,24 +31,25 @@ export default Button;
 
 const StyledButton = styled(MuiButton)`
   text-transform: inherit;
-  width: ${(props) => (props.width ? props.width : "132px")};
-  height: ${(props) => (props.height ? props.height : "40")};
+  width: "132px";
+  height: "40";
   white-space: nowrap;
   border-radius: 30px;
+  
   &.MuiButton-contained {
-    background: ${({ bgcolor }) => bgcolor || "#FE5F1E"};
+    background: "#FE5F1E";
     font-size: 14px;
     border: none;
     color: #ffffff;
   }
 
   &.MuiButton-outlined {
-    color: ${(props) => props.bgcolor || "#FE5F1E"};
-    border-color: ${(props) => props.bgcolor || "#FE5F1E"};
+    color:  "#FE5F1E";
+    border-color: "#FE5F1E";
   }
   &:hover {
-    background: ${(props) => props.hover || "#FE5F1E"};
-    color: ${(props) => props.color || "#ffffff"};
+    background: "#FE5F1E";
+    color:  "#ffffff"};
   }
   &.Mui-disabled {
     background: none;

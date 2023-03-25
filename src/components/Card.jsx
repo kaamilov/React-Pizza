@@ -5,7 +5,14 @@ import Button from "./Button";
 import { addItems } from "../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-const Card = ({ id, title, price, imageUrl, sizes, types }) => {
+// type CardProps = {
+//   id: string;
+//   title: string;
+//   price: number;
+//   imageUrl: string;
+//   types: number[];
+// };
+const Card = ({ id, title, price, imageUrl, types,sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector((state) =>
     state.cart.items.find((obj) => obj.id === id)

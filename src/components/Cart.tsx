@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import { clearItems, selectorCart } from "../redux/slices/cartSlice";
 import CartEmpty from "./CartEmpty";
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectorCart);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
   const onClickClear = () => {
     if (window.confirm("Очистить корзину?")) {
       dispatch(clearItems());
@@ -30,7 +33,7 @@ const Cart = () => {
             <span>Очистить корзину</span>
           </div>
         </Styled_Block1>
-        {items.map((item) => (
+        {items.map((item: any) => (
           <CartItem key={item.id} {...item} />
         ))}
 
@@ -42,16 +45,16 @@ const Cart = () => {
             Сумма заказов <h5>{totalPrice} p</h5>
           </p>
         </Styled_Block2>
+
         <div className="block1">
-          <Link to="/">
-            <Button variant="contained" width="211px" height="55px" disabled>
+          {/* <Link to="/">
+            <Button variant="contained" width="211px" height="55px">
               Вернуться назад
             </Button>
           </Link>
-
           <Button variant="contained" width="211px" height="55px">
             Оплатить сейчас
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Styled_Cart_Container>
