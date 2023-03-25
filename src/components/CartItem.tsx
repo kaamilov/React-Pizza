@@ -5,7 +5,20 @@ import { CiCircleRemove } from "react-icons/ci";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { addItems, minusItem, removeItem } from "../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
-const CartItem = ({ id, title, price, imageUrl, count }) => {
+type CartItemProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  count: number;
+};
+const CartItem: React.FC<CartItemProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  count,
+}) => {
   const dispatch = useDispatch();
   console.log(removeItem(id));
   const plusCount = () => {

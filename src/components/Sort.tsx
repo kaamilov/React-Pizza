@@ -1,9 +1,15 @@
 import { styled } from "@mui/material";
+import { type } from "os";
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort, selectorFilter } from "../redux/slices/filterSlice";
-const options = [
+
+type SortType = {
+  name: string;
+  sort: string;
+};
+const options: SortType[] = [
   { name: "популярности(DESC)", sort: "rating" },
   { name: "популярности(ABC)", sort: "-rating" },
   { name: "по цене(DESC)", sort: "price" },
@@ -15,7 +21,7 @@ const Sort = () => {
   const dispatch = useDispatch();
   const { sort } = useSelector(selectorFilter);
   const [open, setOpen] = useState(false);
-  const onClickSeleckted = (id) => {
+  const onClickSeleckted = (id: SortType) => {
     dispatch(setSort(id));
     setOpen(false);
   };

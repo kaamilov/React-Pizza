@@ -3,7 +3,7 @@ import { Container, styled } from "@mui/material";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const CartEmpty = () => {
+const CartEmpty: React.FC = () => {
   return (
     <Container_Styled>
       <div>
@@ -164,14 +164,14 @@ const CartEmpty = () => {
           </svg>
         </div>
         <Link to="/">
-          <Button
+          {/* <Button
             variant="contained"
             bgcolor="black"
             width="210px"
             height="46px"
           >
             Вернуться назад
-          </Button>
+          </Button> */}
         </Link>
       </div>
     </Container_Styled>
